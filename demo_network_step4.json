@@ -6,7 +6,9 @@
       "spiked": false,
       "spike_count": 1,
       "connections": [
-        {"target": 1, "weight": 0.3000}
+        {"target": 6, "weight": 0.1324},
+        {"target": 1, "weight": 0.3000},
+        {"target": 4, "weight": 0.4362}
       ]
     },
     {
@@ -15,39 +17,38 @@
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 4, "weight": 0.1719},
-        {"target": 8, "weight": 0.2184},
         {"target": 2, "weight": 0.3000}
       ]
     },
     {
       "id": 2,
-      "potential": 0.4724,
+      "potential": 0.6736,
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 7, "weight": 0.2473},
-        {"target": 1, "weight": 0.4718},
         {"target": 3, "weight": 0.3000}
       ]
     },
     {
       "id": 3,
-      "potential": 0.0000,
+      "potential": 0.4596,
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 2, "weight": 0.4187},
+        {"target": 5, "weight": 0.4725},
+        {"target": 2, "weight": 0.3108},
+        {"target": 8, "weight": 0.3893},
         {"target": 4, "weight": 0.3000}
       ]
     },
     {
       "id": 4,
-      "potential": 0.0000,
+      "potential": 0.2576,
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 7, "weight": 0.4752},
+        {"target": 2, "weight": 0.1349},
+        {"target": 7, "weight": 0.4316},
         {"target": 5, "weight": 0.3000}
       ]
     },
@@ -57,18 +58,17 @@
       "spiked": true,
       "spike_count": 1,
       "connections": [
-        {"target": 9, "weight": 0.2484},
-        {"target": 6, "weight": 0.3000},
-        {"target": 8, "weight": 0.1518}
+        {"target": 2, "weight": 0.2012},
+        {"target": 3, "weight": 0.4596},
+        {"target": 6, "weight": 0.3000}
       ]
     },
     {
       "id": 6,
-      "potential": 0.2700,
+      "potential": 0.3482,
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 2, "weight": 0.2113},
         {"target": 7, "weight": 0.3000}
       ]
     },
@@ -78,27 +78,28 @@
       "spiked": false,
       "spike_count": 0,
       "connections": [
+        {"target": 2, "weight": 0.3559},
+        {"target": 4, "weight": 0.1531},
+        {"target": 0, "weight": 0.3160},
         {"target": 8, "weight": 0.3000}
       ]
     },
     {
       "id": 8,
-      "potential": 0.1366,
+      "potential": 0.0000,
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 1, "weight": 0.3647},
-        {"target": 2, "weight": 0.3226},
+        {"target": 7, "weight": 0.3855},
         {"target": 9, "weight": 0.3000}
       ]
     },
     {
       "id": 9,
-      "potential": 0.2235,
+      "potential": 0.0000,
       "spiked": false,
       "spike_count": 0,
       "connections": [
-        {"target": 1, "weight": 0.3626}
       ]
     }
   ]
