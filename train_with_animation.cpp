@@ -203,7 +203,8 @@ int main(int argc, char* argv[]) {
                 
                 // Export network state at certain steps during first few samples of each epoch
                 if (sample_idx < 3 && (step == 0 || step == 5 || step == 10 || step == simulation_steps - 1)) {
-                    std::string filename = "training_epoch" + std::to_string(epoch) + 
+                    system("mkdir -p data/json");
+                    std::string filename = "data/json/training_epoch" + std::to_string(epoch) + 
                                          "_digit" + std::to_string(sample.label) + 
                                          "_step" + std::to_string(step) + ".json";
                     std::ofstream out(filename);
@@ -229,7 +230,8 @@ int main(int argc, char* argv[]) {
             
             // Export final state after each sample (for animation)
             if (total_samples % export_interval == 0) {
-                std::string filename = "training_progress_sample" + std::to_string(total_samples) + ".json";
+                system("mkdir -p data/json");
+                std::string filename = "data/json/training_progress_sample" + std::to_string(total_samples) + ".json";
                 std::ofstream out(filename);
                 if (out) {
                     network.export_to_json(out);
@@ -261,7 +263,8 @@ int main(int argc, char* argv[]) {
                 
                 // Export at key steps
                 if (step == 0 || step == 5 || step == 10 || step == 15 || step == simulation_steps - 1) {
-                    std::string filename = "training_epoch" + std::to_string(epoch) + 
+                    system("mkdir -p data/json");
+                    std::string filename = "data/json/training_epoch" + std::to_string(epoch) + 
                                          "_test_digit" + std::to_string(digit) + 
                                          "_step" + std::to_string(step) + ".json";
                     std::ofstream out(filename);
@@ -279,7 +282,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Training complete!\n";
     std::cout << "Exported " << frame_count << " animation frames\n";
     std::cout << "\nTo view training animation:\n";
-    std::cout << "  python animate_training.py training_epoch0_test_digit0_step0.json\n";
+    std::cout << "  python animate_training.py data/json/training_epoch0_test_digit0_step0.json\n";
     
     return 0;
 }

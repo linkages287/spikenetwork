@@ -3,3 +3,5 @@ venv/
 spike_network
 export_network
 test_functionality
+data/json/*.json
+data/json/

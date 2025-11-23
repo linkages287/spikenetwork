@@ -12,6 +12,11 @@ int main(int argc, char* argv[]) {
     }
     
     std::string output_file = argv[1];
+    // If no path specified, put in data/json
+    if (output_file.find('/') == std::string::npos && output_file.find('\\') == std::string::npos) {
+        system("mkdir -p data/json");
+        output_file = "data/json/" + output_file;
+    }
     int num_steps = 10;
     if (argc >= 3) {
         num_steps = std::atoi(argv[2]);

@@ -55,8 +55,10 @@ class TrainingAnimator:
         if match:
             base_pattern = "training_epoch{}_test_digit{}_step{}.json"
         else:
-            # Try to find any training files
-            training_files = glob.glob("training_epoch*_test_digit*_step*.json")
+            # Try to find any training files in data/json first, then current directory
+            training_files = glob.glob("data/json/training_epoch*_test_digit*_step*.json")
+            if not training_files:
+                training_files = glob.glob("training_epoch*_test_digit*_step*.json")
             if training_files:
                 self.base_filename = training_files[0]
                 match = re.search(r'training_epoch(\d+)_test_digit(\d+)_step(\d+)\.json', self.base_filename)
@@ -66,7 +68,13 @@ class TrainingAnimator:
         
         # Find all training files
         dir_path = os.path.dirname(self.base_filename) if os.path.dirname(self.base_filename) else '.'
-        training_files = glob.glob(os.path.join(dir_path, "training_epoch*_test_digit*_step*.json"))
+        if dir_path == '.':
+            # Try data/json first
+            training_files = glob.glob("data/json/training_epoch*_test_digit*_step*.json")
+            if not training_files:
+                training_files = glob.glob("training_epoch*_test_digit*_step*.json")
+        else:
+            training_files = glob.glob(os.path.join(dir_path, "training_epoch*_test_digit*_step*.json"))
         
         # Parse and sort files
         parsed_files = []
@@ -290,14 +298,17 @@ def main():
     args = parser.parse_args()
     
     if not args.base_file:
-        # Try to find training files automatically
-        training_files = glob.glob("training_epoch*_test_digit*_step*.json")
+        # Try to find training files automatically (check data/json first)
+        training_files = glob.glob("data/json/training_epoch*_test_digit*_step*.json")
+        if not training_files:
+            training_files = glob.glob("training_epoch*_test_digit*_step*.json")
         if training_files:
             args.base_file = training_files[0]
             print(f"Auto-detected training file: {args.base_file}")
         else:
             print("Usage: python animate_training.py <training_file> [options]")
             print("\nOr run train_with_animation first to generate training frames")
+            print("Files will be saved to data/json/ directory")
             sys.exit(1)
     
     try:

@@ -222,8 +222,11 @@ int main(int argc, char* argv[]) {
     std::cout << "Running simulation for " << num_steps << " steps...\n";
     std::cout << "Exporting network state at each step...\n\n";
     
+    // Create data/json directory if it doesn't exist
+    system("mkdir -p data/json");
+    
     // Run simulation and export at each step
-    std::string base_filename = "spike_animation";
+    std::string base_filename = "data/json/spike_animation";
     
     for (int step = 0; step < num_steps; ++step) {
         // Update network

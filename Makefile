@@ -37,13 +37,14 @@ $(TRAIN_ANIM_TARGET): train_with_animation.o neuron.o network.o
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS) $(EXPORT_OBJECTS) $(TRAIN_OBJECTS) $(SIMULATE_OBJECTS) $(TRAIN_ANIM_OBJECTS) $(TARGET) $(EXPORT_TARGET) $(TRAIN_TARGET) $(SIMULATE_TARGET) $(TRAIN_ANIM_TARGET) *.json
+	rm -f $(OBJECTS) $(EXPORT_OBJECTS) $(TRAIN_OBJECTS) $(SIMULATE_OBJECTS) $(TRAIN_ANIM_OBJECTS) $(TARGET) $(EXPORT_TARGET) $(TRAIN_TARGET) $(SIMULATE_TARGET) $(TRAIN_ANIM_TARGET)
+	rm -rf data/json/*.json
 
 run: $(TARGET)
 	./$(TARGET)
 
 export: $(EXPORT_TARGET)
-	./$(EXPORT_TARGET) network_state.json 10
+	./$(EXPORT_TARGET) data/json/network_state.json 10
 
 setup-venv:
 	@echo "Setting up Python virtual environment..."
@@ -51,10 +52,10 @@ setup-venv:
 
 visualize: export
 	@if [ -d "venv" ]; then \
-		source venv/bin/activate && python visualize_network.py network_state.json_step0.json; \
+		source venv/bin/activate && python visualize_network.py data/json/network_state.json_step0.json; \
 	else \
 		echo "Virtual environment not found. Run 'make setup-venv' first."; \
-		python3 visualize_network.py network_state.json_step0.json; \
+		python3 visualize_network.py data/json/network_state.json_step0.json; \
 	fi
 
 demo: setup-venv export_network
@@ -63,27 +64,27 @@ demo: setup-venv export_network
 train: $(TRAIN_TARGET)
 	./$(TRAIN_TARGET)
 
-visualize-3d: trained_network.json
+visualize-3d: data/json/trained_network.json
 	@if [ -d "venv" ]; then \
-		source venv/bin/activate && python visualize_3d.py trained_network.json; \
+		source venv/bin/activate && python visualize_3d.py data/json/trained_network.json; \
 	else \
-		python3 visualize_3d.py trained_network.json; \
+		python3 visualize_3d.py data/json/trained_network.json; \
 	fi
 
 animate-spiking: $(SIMULATE_TARGET)
-	@./$(SIMULATE_TARGET) trained_network.json 0 30
+	@./$(SIMULATE_TARGET) data/json/trained_network.json 0 30
 	@if [ -d "venv" ]; then \
-		source venv/bin/activate && python animate_3d_spiking.py spike_animation_step0.json; \
+		source venv/bin/activate && python animate_3d_spiking.py data/json/spike_animation_step0.json; \
 	else \
-		python3 animate_3d_spiking.py spike_animation_step0.json; \
+		python3 animate_3d_spiking.py data/json/spike_animation_step0.json; \
 	fi
 
 animate-training: $(TRAIN_ANIM_TARGET)
 	@./$(TRAIN_ANIM_TARGET) 3 0.01
 	@if [ -d "venv" ]; then \
-		source venv/bin/activate && python animate_training.py; \
+		source venv/bin/activate && python animate_training.py data/json/training_epoch0_test_digit0_step0.json; \
 	else \
-		python3 animate_training.py; \
+		python3 animate_training.py data/json/training_epoch0_test_digit0_step0.json; \
 	fi
 
 .PHONY: all clean run export visualize setup-venv demo train visualize-3d animate-spiking animate-training

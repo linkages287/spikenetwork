@@ -237,11 +237,13 @@ int main(int argc, char* argv[]) {
     }
     
     std::cout << "Saving trained network...\n";
-    std::ofstream out_file("trained_network.json");
+    // Create data/json directory if it doesn't exist
+    system("mkdir -p data/json");
+    std::ofstream out_file("data/json/trained_network.json");
     if (out_file.is_open()) {
         network.export_to_json(out_file);
         out_file.close();
-        std::cout << "Network saved to trained_network.json\n";
+        std::cout << "Network saved to data/json/trained_network.json\n";
     }
     
     std::cout << "\n=== Testing on Sample Examples ===\n";
