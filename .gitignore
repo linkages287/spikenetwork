@@ -1,1 +1,5 @@
 venv/
+*.o
+spike_network
+export_network
+test_functionality
