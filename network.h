@@ -22,6 +22,9 @@ public:
     // Update all neurons in the network (one time step)
     void update();
     
+    // Update with learning (STDP)
+    void update_with_learning(int time_step, double learning_rate = 0.01);
+    
     // Get number of neurons
     size_t size() const { return neurons.size(); }
     

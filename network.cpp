@@ -31,6 +31,23 @@ void Network::update() {
     }
 }
 
+void Network::update_with_learning(int time_step, double learning_rate) {
+    // Update all neurons
+    for (auto& neuron : neurons) {
+        neuron->update();
+    }
+    
+    // Set time step for spike tracking
+    for (auto& neuron : neurons) {
+        neuron->set_time_step(time_step);
+    }
+    
+    // Apply STDP learning rule
+    for (auto& neuron : neurons) {
+        neuron->update_stdp(time_step, learning_rate);
+    }
+}
+
 void Network::reset() {
     for (auto& neuron : neurons) {
         neuron->reset();

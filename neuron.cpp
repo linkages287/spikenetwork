@@ -4,7 +4,7 @@
 Neuron::Neuron(double threshold, double resting, double decay)
     : membrane_potential(resting), threshold(threshold), 
       resting_potential(resting), decay_factor(decay),
-      has_spiked(false), spike_count(0) {
+      has_spiked(false), spike_count(0), last_spike_time(-1) {
 }
 
 void Neuron::add_connection(Neuron* target, double weight) {
@@ -41,6 +41,7 @@ void Neuron::update() {
         // Neuron spikes
         has_spiked = true;
         spike_count++;
+        // Note: last_spike_time will be set by set_time_step() after update
         
         // Reset membrane potential after spike
         membrane_potential = resting_potential;
@@ -68,9 +69,53 @@ void Neuron::apply_input(double current) {
     membrane_potential += current;
 }
 
+void Neuron::set_time_step(int time_step) {
+    if (has_spiked) {
+        last_spike_time = time_step;
+        spike_history.push_back(time_step);
+        // Keep only recent spike history (last 100 spikes)
+        if (spike_history.size() > 100) {
+            spike_history.erase(spike_history.begin());
+        }
+    }
+}
+
+void Neuron::update_stdp(int current_time, double learning_rate, double tau_plus, double tau_minus) {
+    // STDP: Spike-Timing Dependent Plasticity
+    // If pre-synaptic neuron spikes before post-synaptic: strengthen (LTP)
+    // If post-synaptic neuron spikes before pre-synaptic: weaken (LTD)
+    
+    if (last_spike_time < 0) return; // No spike history
+    
+    for (auto& conn : connections) {
+        if (conn.target == nullptr) continue;
+        
+        int post_spike_time = conn.target->get_last_spike_time();
+        if (post_spike_time < 0) continue; // Post-synaptic neuron hasn't spiked
+        
+        int dt = post_spike_time - last_spike_time; // Time difference
+        
+        if (dt > 0) {
+            // Pre before post: Long-Term Potentiation (LTP)
+            double weight_change = learning_rate * exp(-dt / tau_plus);
+            conn.weight += weight_change;
+            // Clamp weight
+            if (conn.weight > 1.0) conn.weight = 1.0;
+        } else if (dt < 0) {
+            // Post before pre: Long-Term Depression (LTD)
+            double weight_change = -learning_rate * exp(dt / tau_minus);
+            conn.weight += weight_change;
+            // Clamp weight
+            if (conn.weight < 0.0) conn.weight = 0.0;
+        }
+    }
+}
+
 void Neuron::reset() {
     membrane_potential = resting_potential;
     has_spiked = false;
     spike_count = 0;
+    last_spike_time = -1;
+    spike_history.clear();
 }
 
