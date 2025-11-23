@@ -1,0 +1,105 @@
+{
+  "neurons": [
+    {
+      "id": 0,
+      "potential": 0.0000,
+      "spiked": false,
+      "spike_count": 1,
+      "connections": [
+        {"target": 1, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 1,
+      "potential": 0.1771,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 4, "weight": 0.1719},
+        {"target": 8, "weight": 0.2184},
+        {"target": 2, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 2,
+      "potential": 0.4724,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 7, "weight": 0.2473},
+        {"target": 1, "weight": 0.4718},
+        {"target": 3, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 3,
+      "potential": 0.0000,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 2, "weight": 0.4187},
+        {"target": 4, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 4,
+      "potential": 0.0000,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 7, "weight": 0.4752},
+        {"target": 5, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 5,
+      "potential": 0.0000,
+      "spiked": true,
+      "spike_count": 1,
+      "connections": [
+        {"target": 9, "weight": 0.2484},
+        {"target": 6, "weight": 0.3000},
+        {"target": 8, "weight": 0.1518}
+      ]
+    },
+    {
+      "id": 6,
+      "potential": 0.2700,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 2, "weight": 0.2113},
+        {"target": 7, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 7,
+      "potential": 0.0000,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 8, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 8,
+      "potential": 0.1366,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 1, "weight": 0.3647},
+        {"target": 2, "weight": 0.3226},
+        {"target": 9, "weight": 0.3000}
+      ]
+    },
+    {
+      "id": 9,
+      "potential": 0.2235,
+      "spiked": false,
+      "spike_count": 0,
+      "connections": [
+        {"target": 1, "weight": 0.3626}
+      ]
+    }
+  ]
+}
