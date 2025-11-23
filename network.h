@@ -36,6 +36,9 @@ public:
     
     // Export network state to JSON (for visualization)
     void export_to_json(std::ostream& out) const;
+    
+    // Load network from JSON file (weights and connections)
+    static Network* load_from_json(const std::string& filename);
 };
 
 #endif // NETWORK_H

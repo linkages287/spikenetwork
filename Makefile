@@ -5,18 +5,24 @@ EXPORT_TARGET = export_network
 TRAIN_TARGET = train_numbers
 SIMULATE_TARGET = simulate_spiking
 TRAIN_ANIM_TARGET = train_with_animation
+TRAIN_MNIST_TARGET = train_mnist
+TEST_MNIST_TARGET = test_mnist
 SOURCES = main.cpp neuron.cpp network.cpp
 EXPORT_SOURCES = export_network.cpp neuron.cpp network.cpp
 TRAIN_SOURCES = train_numbers.cpp neuron.cpp network.cpp
 SIMULATE_SOURCES = simulate_spiking.cpp neuron.cpp network.cpp
 TRAIN_ANIM_SOURCES = train_with_animation.cpp neuron.cpp network.cpp
+TRAIN_MNIST_SOURCES = train_mnist.cpp neuron.cpp network.cpp
+TEST_MNIST_SOURCES = test_mnist.cpp neuron.cpp network.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXPORT_OBJECTS = $(EXPORT_SOURCES:.cpp=.o)
 TRAIN_OBJECTS = $(TRAIN_SOURCES:.cpp=.o)
 SIMULATE_OBJECTS = $(SIMULATE_SOURCES:.cpp=.o)
 TRAIN_ANIM_OBJECTS = $(TRAIN_ANIM_SOURCES:.cpp=.o)
+TRAIN_MNIST_OBJECTS = $(TRAIN_MNIST_SOURCES:.cpp=.o)
+TEST_MNIST_OBJECTS = $(TEST_MNIST_SOURCES:.cpp=.o)
 
-all: $(TARGET) $(EXPORT_TARGET) $(TRAIN_TARGET) $(SIMULATE_TARGET) $(TRAIN_ANIM_TARGET)
+all: $(TARGET) $(EXPORT_TARGET) $(TRAIN_TARGET) $(SIMULATE_TARGET) $(TRAIN_ANIM_TARGET) $(TRAIN_MNIST_TARGET) $(TEST_MNIST_TARGET)
 
 $(TARGET): main.o neuron.o network.o
 	$(CXX) $(CXXFLAGS) -o $(TARGET) main.o neuron.o network.o
@@ -33,11 +39,17 @@ $(SIMULATE_TARGET): simulate_spiking.o neuron.o network.o
 $(TRAIN_ANIM_TARGET): train_with_animation.o neuron.o network.o
 	$(CXX) $(CXXFLAGS) -o $(TRAIN_ANIM_TARGET) train_with_animation.o neuron.o network.o
 
+$(TRAIN_MNIST_TARGET): train_mnist.o neuron.o network.o
+	$(CXX) $(CXXFLAGS) -o $(TRAIN_MNIST_TARGET) train_mnist.o neuron.o network.o
+
+$(TEST_MNIST_TARGET): test_mnist.o neuron.o network.o
+	$(CXX) $(CXXFLAGS) -o $(TEST_MNIST_TARGET) test_mnist.o neuron.o network.o
+
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS) $(EXPORT_OBJECTS) $(TRAIN_OBJECTS) $(SIMULATE_OBJECTS) $(TRAIN_ANIM_OBJECTS) $(TARGET) $(EXPORT_TARGET) $(TRAIN_TARGET) $(SIMULATE_TARGET) $(TRAIN_ANIM_TARGET)
+	rm -f $(OBJECTS) $(EXPORT_OBJECTS) $(TRAIN_OBJECTS) $(SIMULATE_OBJECTS) $(TRAIN_ANIM_OBJECTS) $(TRAIN_MNIST_OBJECTS) $(TEST_MNIST_OBJECTS) $(TARGET) $(EXPORT_TARGET) $(TRAIN_TARGET) $(SIMULATE_TARGET) $(TRAIN_ANIM_TARGET) $(TRAIN_MNIST_TARGET) $(TEST_MNIST_TARGET)
 	rm -rf data/json/*.json
 
 run: $(TARGET)
@@ -64,6 +76,12 @@ demo: setup-venv export_network
 train: $(TRAIN_TARGET)
 	./$(TRAIN_TARGET)
 
+train-mnist: $(TRAIN_MNIST_TARGET)
+	./$(TRAIN_MNIST_TARGET) medium 0.01 5
+
+test-mnist: $(TEST_MNIST_TARGET)
+	./$(TEST_MNIST_TARGET) medium "" 100 30
+
 visualize-3d: data/json/trained_network.json
 	@if [ -d "venv" ]; then \
 		source venv/bin/activate && python visualize_3d.py data/json/trained_network.json; \
@@ -87,5 +105,11 @@ animate-training: $(TRAIN_ANIM_TARGET)
 		python3 animate_training.py data/json/training_epoch0_test_digit0_step0.json; \
 	fi
 
-.PHONY: all clean run export visualize setup-venv demo train visualize-3d animate-spiking animate-training
+full-process: all
+	@./run_full_process.sh
+
+download-mnist:
+	@./download_mnist.sh
+
+.PHONY: all clean run export visualize setup-venv demo train train-mnist test-mnist visualize-3d animate-spiking animate-training full-process download-mnist
 

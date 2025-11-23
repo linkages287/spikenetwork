@@ -5,3 +5,13 @@ export_network
 test_functionality
 data/json/*.json
 data/json/
+# MNIST dataset files (too large for GitHub)
+mnist_train.csv
+mnist_test.csv
+*.csv
+# Python cache
+__pycache__/
+*.pyc
+# Kaggle credentials
+kagglekey.key
+*.key

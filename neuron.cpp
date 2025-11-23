@@ -80,10 +80,10 @@ void Neuron::set_time_step(int time_step) {
     }
 }
 
-void Neuron::update_stdp(int current_time, double learning_rate, double tau_plus, double tau_minus) {
+void Neuron::update_stdp(int /* current_time */, double learning_rate, double tau_plus, double tau_minus) {
     // STDP: Spike-Timing Dependent Plasticity
     // If pre-synaptic neuron spikes before post-synaptic: strengthen (LTP)
-    // If post-synaptic neuron spikes before pre-synaptic: weaken (LTD)
+    // If post-synaptic neuron spikes before post-synaptic: weaken (LTD)
     
     if (last_spike_time < 0) return; // No spike history
     

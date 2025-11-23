@@ -17,7 +17,7 @@ public:
         int label;
     };
     
-    static std::vector<Sample> generate_synthetic_data(int samples_per_digit = 1) {
+    static std::vector<Sample> generate_synthetic_data(int /* samples_per_digit */ = 1) {
         std::vector<Sample> dataset;
         int grid_size = 7;
         int total_pixels = grid_size * grid_size;

@@ -15,7 +15,7 @@ public:
         int label;
     };
     
-    static std::vector<Sample> generate_synthetic_data(int samples_per_digit = 1) {
+    static std::vector<Sample> generate_synthetic_data(int /* samples_per_digit */ = 1) {
         std::vector<Sample> dataset;
         int grid_size = 7;
         int total_pixels = grid_size * grid_size;
@@ -122,7 +122,7 @@ private:
 };
 
 // Load network from JSON (simplified - we'll recreate it)
-Network* recreate_network_from_json(const std::string& filename) {
+Network* recreate_network_from_json(const std::string& /* filename */) {
     // For now, we'll create a new network with the same architecture
     // In a full implementation, you'd parse the JSON to restore exact weights
     int input_size = 49;
